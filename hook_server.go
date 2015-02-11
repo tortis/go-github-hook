@@ -46,7 +46,7 @@ func (h *HookServer) handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get GitHub headers
-	eventType := r.Header.Get("X-Gethub-Event")
+	eventType := r.Header.Get("X-GitHub-Event")
 	eventSignature := r.Header.Get("X-Hub-Signature")
 	eventId := r.Header.Get("X-Github-Delivery")
 
