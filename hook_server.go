@@ -46,9 +46,9 @@ func (h *HookServer) handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get GitHub headers
+	eventId := r.Header.Get("X-GitHub-Delivery")
 	eventType := r.Header.Get("X-GitHub-Event")
 	eventSignature := r.Header.Get("X-Hub-Signature")
-	eventId := r.Header.Get("X-Github-Delivery")
 
 	// Only handle push events
 	if eventType != "push" {
@@ -68,7 +68,7 @@ func (h *HookServer) handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Validate the event signature
-	sigPieces := strings.Split("=", eventSignature)
+	sigPieces := strings.Split(eventSignature, "=")
 	if len(sigPieces) != 2 {
 		log.Println("Bad event signature.")
 		w.WriteHeader(http.StatusBadRequest)
